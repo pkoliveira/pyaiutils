@@ -34,7 +34,7 @@ def multiclass_predict_nd_to_1d(y_):
 def prc_auc(y_true, y_pred, class_names):
 
     if(len(y_pred.shape) == 1):
-        y_pred = multiclass_predict_1d_to_nd(y_pred, np.unique(y_true))
+        y_pred = multiclass_predict_1d_to_nd(y_pred, np.unique(y_pred))
         y_true = multiclass_predict_1d_to_nd(y_true, np.unique(y_true))
     n_classes = len(class_names)
     precision = dict()
@@ -50,7 +50,7 @@ def prc_auc(y_true, y_pred, class_names):
 
 def roc_auc(y_true, y_pred, class_names):
     if(len(y_pred.shape) == 1):
-        y_pred = multiclass_predict_1d_to_nd(y_pred, np.unique(y_true))
+        y_pred = multiclass_predict_1d_to_nd(y_pred, np.unique(y_pred))
         y_true = multiclass_predict_1d_to_nd(y_true, np.unique(y_true))
 
     n_classes = len(class_names)
