@@ -381,9 +381,9 @@ def plot_prc_auc_multiclass(y_test, y_pred, class_names, save_path=None):
 def plot_graphics(y_true, y_pred, class_names=None, save_path=None):
     if(class_names is None):
         class_names = np.unique(np.array(y_pred))
-    display(plot_confusion_matrix(y_true, y_pred, visualize=True,
-                                  normalize=True, class_names=class_names, save_path=save_path))
-    display(plot_auc_roc_multi_class(y_true, y_pred,
-                                     class_names=class_names, save_path=save_path))
-    display(plot_prc_auc_multiclass(y_true, y_pred,
-                                    class_names=class_names, save_path=save_path))
+    plot_confusion_matrix(y_true, y_pred, visualize=True,
+                                  normalize=True, class_names=class_names, save_path=save_path)
+    plot_auc_roc_multi_class(y_true, y_pred,
+                                     class_names=class_names, save_path=save_path)
+    plot_prc_auc_multiclass(y_true, y_pred,
+                                    class_names=class_names, save_path=save_path)
