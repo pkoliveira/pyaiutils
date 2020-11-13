@@ -9,7 +9,11 @@ from . import utils
 from . import metrics
 
 
-def plot_confusion_matrix(y_test, y_pred, class_names=None, save_path=None, visualize=False, cmap=None, normalize=True, labels=True, title='Matriz de confusão'):
+def plot_confusion_matrix(
+    y_test, y_pred, class_names=None, save_path=None, 
+    visualize=False, cmap=None, normalize=True, labels=True, 
+    title='Matriz de confusão'
+    ):
     y_test = np.array(y_test)
     y_pred = np.array(y_pred)
     uniques = np.unique(y_pred)
@@ -83,7 +87,7 @@ def plot_confusion_matrix(y_test, y_pred, class_names=None, save_path=None, visu
     plt.close()
 
 
-def plot_auc_roc_multi_class(y_test, y_pred, class_names, save_path=None):
+def plot_auc_roc_multi_class(y_test, y_pred, class_names, visualize=False, save_path=None):
     y_test = np.array(y_test)
     y_pred = np.array(y_pred)
 
@@ -155,10 +159,13 @@ def plot_auc_roc_multi_class(y_test, y_pred, class_names, save_path=None):
         if(not os.path.isdir(save_path)):
             os.makedirs(save_path, exist_ok=True)
         plt.savefig(os.path.join(save_path, 'AUC_ROC.png'))
-    plt.show()
+    
+    if(visualize):
+        plt.show()
+    plt.close()
 
 
-def plot_prc_auc_multiclass(y_test, y_pred, class_names, save_path=None):
+def plot_prc_auc_multiclass(y_test, y_pred, class_names, visualize=False, save_path=None):
     y_test = np.array(y_test)
     y_pred = np.array(y_pred)
 
@@ -220,15 +227,26 @@ def plot_prc_auc_multiclass(y_test, y_pred, class_names, save_path=None):
         if(not os.path.isdir(save_path)):
             os.makedirs(save_path, exist_ok=True)
         plt.savefig(os.path.join(save_path, 'AUC_PRC.png'))
-    plt.show()
+    
+    if(visualize):
+        plt.show()
+    plt.close()
 
 
-def plot_graphics(y_true, y_pred, class_names=None, save_path=None):
+def plot_graphics(y_true, y_pred, class_names=None, visualize=False, save_path=None):
     if(class_names is None):
         class_names = np.unique(np.array(y_pred))
-    plot_confusion_matrix(y_true, y_pred, visualize=True,
-                                  normalize=True, class_names=class_names, save_path=save_path)
-    plot_auc_roc_multi_class(y_true, y_pred,
-                                     class_names=class_names, save_path=save_path)
-    plot_prc_auc_multiclass(y_true, y_pred,
-                                    class_names=class_names, save_path=save_path)
+        
+    plot_confusion_matrix(
+        y_true, y_pred, visualize=True, normalize=True, 
+        class_names=class_names, save_path=save_path, 
+        visualize=visualize
+        )
+    plot_auc_roc_multi_class(
+        y_true, y_pred,class_names=class_names, save_path=save_path,
+        visualize=visualize
+        )
+    plot_prc_auc_multiclass(
+        y_true, y_pred, class_names=class_names, save_path=save_path, 
+        visualize=visualize
+        )
