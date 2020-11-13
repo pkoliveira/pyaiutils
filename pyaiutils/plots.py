@@ -7,7 +7,8 @@ import os
 
 from . import utils
 from . import metrics
-
+import logging
+log = logging.getLogger()
 
 def plot_confusion_matrix(
     y_test, y_pred, class_names=None, save_path=None, 
@@ -80,8 +81,10 @@ def plot_confusion_matrix(
     if(save_path is not None):
         if(not os.path.isdir(save_path)):
             os.makedirs(save_path, exist_ok=True)
-        fig.savefig(os.path.join(save_path, 'confusion_matriz.png'),
-                    dpi=180, bbox_inches='tight')
+        
+        dest = os.path.join(save_path, 'confusion_matriz.png')
+        log.log(f"Saving confusion matriz in {dest}")
+        fig.savefig(dest, dpi=180, bbox_inches='tight')
     if(visualize):
         plt.show()
     plt.close()
@@ -158,7 +161,9 @@ def plot_auc_roc_multi_class(y_test, y_pred, class_names, visualize=False, save_
     if(save_path is not None):
         if(not os.path.isdir(save_path)):
             os.makedirs(save_path, exist_ok=True)
-        plt.savefig(os.path.join(save_path, 'AUC_ROC.png'))
+        dest = os.path.join(save_path, 'AUC_ROC.png')
+        log.log(f"Saving AUC_ROC in {dest}")
+        plt.savefig(dest)
     
     if(visualize):
         plt.show()
@@ -226,7 +231,9 @@ def plot_prc_auc_multiclass(y_test, y_pred, class_names, visualize=False, save_p
     if(save_path is not None):
         if(not os.path.isdir(save_path)):
             os.makedirs(save_path, exist_ok=True)
-        plt.savefig(os.path.join(save_path, 'AUC_PRC.png'))
+        dest = os.path.join(save_path, 'AUC_PRC.png')
+        log.log(f"Saving AUC_PRC in {dest}")
+        plt.savefig(dest)
     
     if(visualize):
         plt.show()
