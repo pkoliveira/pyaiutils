@@ -83,7 +83,7 @@ def plot_confusion_matrix(
             os.makedirs(save_path, exist_ok=True)
         
         dest = os.path.join(save_path, 'confusion_matriz.png')
-        log.log(f"Saving confusion matriz in {dest}")
+        log.debug(f"Saving confusion matriz in {dest}")
         fig.savefig(dest, dpi=180, bbox_inches='tight')
     if(visualize):
         plt.show()
@@ -162,7 +162,8 @@ def plot_auc_roc_multi_class(y_test, y_pred, class_names, visualize=False, save_
         if(not os.path.isdir(save_path)):
             os.makedirs(save_path, exist_ok=True)
         dest = os.path.join(save_path, 'AUC_ROC.png')
-        log.log(f"Saving AUC_ROC in {dest}")
+        log.debug(f"Saving AUC_ROC in {dest}")
+        
         plt.savefig(dest)
     
     if(visualize):
@@ -232,7 +233,7 @@ def plot_prc_auc_multiclass(y_test, y_pred, class_names, visualize=False, save_p
         if(not os.path.isdir(save_path)):
             os.makedirs(save_path, exist_ok=True)
         dest = os.path.join(save_path, 'AUC_PRC.png')
-        log.log(f"Saving AUC_PRC in {dest}")
+        log.debug(f"Saving AUC_PRC in {dest}")
         plt.savefig(dest)
     
     if(visualize):
