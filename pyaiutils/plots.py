@@ -233,14 +233,13 @@ def plot_prc_auc_multiclass(y_test, y_pred, class_names, visualize=False, save_p
     plt.close()
 
 
-def plot_graphics(y_true, y_pred, class_names=None, visualize=False, save_path=None):
+def plot_graphics(y_true, y_pred, class_names=None, visualize=False, normalize=True, save_path=None):
     if(class_names is None):
         class_names = np.unique(np.array(y_pred))
         
     plot_confusion_matrix(
-        y_true, y_pred, visualize=True, normalize=True, 
-        class_names=class_names, save_path=save_path, 
-        visualize=visualize
+        y_true, y_pred, class_names=class_names, save_path=save_path, 
+        visualize=visualize, normalize=normalize
         )
     plot_auc_roc_multi_class(
         y_true, y_pred,class_names=class_names, save_path=save_path,
