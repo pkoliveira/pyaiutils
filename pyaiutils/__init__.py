@@ -3,33 +3,48 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 import matplotlib.colors as colors
-import itertools
 import pandas as pd
 import math
-from imblearn.metrics import sensitivity_specificity_support
 import os
 
+def cycle(iterable):
+    """Form a complex number.
 
-def multiclass_predict_1d_to_nd(y_, unique_labels):
-    if(len(np.unique(y_)) != len(unique_labels)):
-        y_ = y_.argmax(axis=1)
-    y_new = []
-    for y in y_:
-        values = []
-        for u in unique_labels:
-            if(u == y):
-                values.append(1)
-            else:
-                values.append(0)
-        y_new.append(values)
-    return np.array(y_new)
+    Keyword arguments:
+    iterable -- the real part (default 0.0)
+    """
+    saved = []
+    for element in iterable:
+        yield element
+        saved.append(element)
+    while saved:
+        for element in saved:
+              yield element
+    
+    return saved
 
+def iteraux(frstIter, scndIter):
+    """Form a complex number.
 
-def multiclass_predict_nd_to_1d(y_):
-    return y_.argmax(axis=1)
-
+    Keyword arguments:
+    frstIter -- the real part (default 0.0)
+    scndIter -- the imaginary part (default 0.0)
+    """
+    itermtx = []
+    for i in range(frstIter):
+        for j in range(scndIter):
+            itermtx.append((i, j))
+    
+    return itermtx
 
 def prc_auc(y_true, y_pred, class_names):
+    """Form a complex number.
+
+    Keyword arguments:
+    y_true -- the real part (default 0.0)
+    y_pred -- the imaginary part (default 0.0)
+    class_names -- the imaginary part (default 0.0)
+    """
     n_classes = len(class_names)
     precision = dict()
     recall = dict()
@@ -43,6 +58,13 @@ def prc_auc(y_true, y_pred, class_names):
 
 
 def roc_auc(y_true, y_pred, class_names):
+    """Form a complex number.
+
+    Keyword arguments:
+    y_true -- the real part (default 0.0)
+    y_pred -- the imaginary part (default 0.0)
+    class_names -- the imaginary part (default 0.0)
+    """
     n_classes = len(class_names)
     fpr = dict()
     tpr = dict()
@@ -52,53 +74,121 @@ def roc_auc(y_true, y_pred, class_names):
         roc_auc.append(metrics.auc(fpr[i], tpr[i]))
     return roc_auc
 
+
 def weighted_average(metric_p, metric_n, P, N):
+    """Form a complex number.
+
+    Keyword arguments:
+    metric_p -- the real part (default 0.0)
+    metric_n -- the imaginary part (default 0.0)
+    P -- the real part (default 0.0)
+    N -- the imaginary part (default 0.0)
+    """
     media_p = (metric_p*P + metric_n*N)/(P+N)
     return media_p
 
 
 def recall(tp, p):
+    """Form a complex number.
+
+    Keyword arguments:
+    tp -- the real part (default 0.0)
+    p -- the imaginary part (default 0.0)
+    """
     return tp/p
 
 
 def specificity(tn, n):
+    """Form a complex number.
+
+    Keyword arguments:
+    tn -- the real part (default 0.0)
+    n -- the imaginary part (default 0.0)
+    """
     return tn/n
 
 
 def accuracy(tn, tp, p, n):
+    """Form a complex number.
+
+    Keyword arguments:
+    tn -- the real part (default 0.0)
+    tp -- the imaginary part (default 0.0)
+    p -- the real part (default 0.0)
+    n -- the imaginary part (default 0.0)
+    """
     return (tn + tp) / (p + n)
 
 
 def precision(tp, fp):
+    """Form a complex number.
+
+    Keyword arguments:
+    tp -- the real part (default 0.0)
+    fp -- the imaginary part (default 0.0)
+    """
     return tp/(fp + tp)
 
 
 def f1_score(y_true, y_pred):
+    """Form a complex number.
+
+    Keyword arguments:
+    y_true -- the real part (default 0.0)
+    y_pred -- the imaginary part (default 0.0)
+    """
     return metrics.f1_score(y_true, y_pred, average=None)
 
 
 def truncate_colormap(cmap, minval=0.0, maxval=1.0, n=100):
+    """Form a complex number.
+
+    Keyword arguments:
+    cmap -- the real part (default 0.0)
+    minval -- the imaginary part (default 0.0)
+    maxval -- the real part (default 0.0)
+    n -- the imaginary part (default 0.0)
+    """
     new_cmap = colors.LinearSegmentedColormap.from_list(
         'trunc({n},{a:.2f},{b:.2f})'.format(n=cmap.name, a=minval, b=maxval),
         cmap(np.linspace(minval, maxval, n)))
     return new_cmap
 
 
-def plot_confusion_matrix(y_true, y_pred, class_names=None, save_path=None, visualize=False, cmap=None, normalize=True, labels=True, title='Matriz de confusão'):
-    y_true = np.array(y_true)
-    y_pred = np.argmax(y_pred, axis=1) 
-    uniques = np.unique(y_true)
+def plot_confusion_matrix(y_test, y_pred, class_names=None, save_path=None, visualize=False, cmap=None, normalize=True, labels=True, title='Matriz de confusão'):
+    """Form a complex number.
+
+    Arguments:
+    y_true -- the real part (default 0.0)
+    y_pred -- the imaginary part (default 0.0)
+    class_names -- the imaginary part (default 0.0)
+    save_path -- the imaginary part (default 0.0)
+    visualize -- the imaginary part (default 0.0)
+    cmap -- the imaginary part (default 0.0)
+    normalize -- the imaginary part (default 0.0)
+    labels -- the imaginary part (default 0.0)
+    title -- the imaginary part (default 0.0)
+    """
+    y_test = np.array(y_test)
+    
+    try:
+        y_pred = np.argmax(y_pred, axis=1) 
+    except Exception as e:
+        print(e)
+         
+        
+    uniques = np.unique(y_test)
 
     if(len(class_names) == 0):
-        if(len(y_true.shape) == 1):
-            class_names = np.unique(y_true)
+        if(len(y_test.shape) == 1):
+            class_names = np.unique(y_test)
         else:
-            class_names = np.unique(np.argmax(y_true, axis=1))
+            class_names = np.unique(np.argmax(y_test, axis=1))
     
-    if(len(y_true.shape) > 1):
-        y_true = np.argmax(y_true, axis=1)
+    if(len(y_test.shape) > 1):
+        y_test = np.argmax(y_test, axis=1)
         
-    cm = metrics.confusion_matrix(y_true, y_pred)
+    cm = metrics.confusion_matrix(y_test, y_pred)
     
     rotulos = []
     for index, value in enumerate(uniques):
@@ -125,7 +215,6 @@ def plot_confusion_matrix(y_true, y_pred, class_names=None, save_path=None, visu
     plt.colorbar()
     #plt.ylim(-0.5, len(class_names) - 0.5)
     
-
     thresh = cm.max() / 1.5 if normalize else cm.max() / 2
 
     if class_names is not None:
@@ -134,14 +223,14 @@ def plot_confusion_matrix(y_true, y_pred, class_names=None, save_path=None, visu
                    rotation=45, ha='right', rotation_mode="anchor")
         plt.yticks(tick_marks, class_names, fontsize=16)
 
-    contador = 0
     if labels:
-        for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+        for i, j in iteraux(cm.shape[0], cm.shape[1]):
             if normalize:
+                perc_cm[i, j] = 0 if math.isnan(perc_cm[i, j]) else perc_cm[i, j]
+                cm[i, j] = 0 if math.isnan(cm[i, j]) else cm[i, j]
                 plt.text(j, i, f"{'{:0.2f}%'.format(perc_cm[i, j])}\n({cm[i, j]})", fontsize=16,
                          horizontalalignment='center', verticalalignment='center',
                          color='white' if cm[i, j] > thresh else 'black')
-                contador = contador+1
             else:
                 plt.text(j, i, '{:,}'.format(cm[i, j]), fontsize=16,
                          horizontalalignment='center', verticalalignment='center',
@@ -161,27 +250,39 @@ def plot_confusion_matrix(y_true, y_pred, class_names=None, save_path=None, visu
     plt.close()
 
 
-def plot_auc_roc_multi_class(y_true, y_pred, class_names, save_path=None):
-    y_true = np.array(y_true)
-    y_pred = np.argmax(y_pred, axis=1)  
+def plot_auc_roc_multi_class(y_test, y_pred, class_names, save_path=None):
+    """Form a complex number.
+
+    Arguments:
+    y_true -- the real part (default 0.0)
+    y_pred -- the imaginary part (default 0.0)
+    class_names -- the imaginary part (default 0.0)
+    save_path -- the imaginary part (default 0.0)
+    """
+    y_test = np.array(y_test)
+    
+    try:
+        y_pred = np.argmax(y_pred, axis=1) 
+    except Exception as e:
+        print(e)
     
     if(len(class_names) == 0):
-        if(len(y_true.shape) == 1):
-            class_names = np.unique(y_true)
+        if(len(y_test.shape) == 1):
+            class_names = np.unique(y_test)
         else:
-            class_names = np.unique(np.argmax(y_true, axis=1))
+            class_names = np.unique(np.argmax(y_test, axis=1))
     
-    if(len(y_true.shape) == 1):
-        matrix = metrics.confusion_matrix(y_true, y_pred)
-        y_true = pd.get_dummies(y_true).values
+    if(len(y_test.shape) == 1):
+        matrix = metrics.confusion_matrix(y_test, y_pred)
+        y_test = pd.get_dummies(y_test).values
     else:
-        matrix = metrics.confusion_matrix(np.argmax(y_true, axis=1), y_pred)
+        matrix = metrics.confusion_matrix(np.argmax(y_test, axis=1), y_pred)
         
     if(len(y_pred.shape) == 1):
         class_check = np.unique(y_pred)
         y_pred = pd.get_dummies(y_pred).values
         
-    if(y_pred.shape[1] != y_true.shape[1]):
+    if(y_pred.shape[1] != y_test.shape[1]):
         y_pred_df = pd.DataFrame(columns=class_names)
         i_control = 0
         for i in class_names:
@@ -199,11 +300,11 @@ def plot_auc_roc_multi_class(y_true, y_pred, class_names, save_path=None):
     tpr = dict()
     roc_auc = dict()
     for i in range(n_classes):
-        fpr[i], tpr[i], _ = metrics.roc_curve(y_true[:, i], y_pred[:, i])
+        fpr[i], tpr[i], _ = metrics.roc_curve(y_test[:, i], y_pred[:, i])
         roc_auc[i] = metrics.auc(fpr[i], tpr[i])
     # Compute micro-average ROC curve and ROC area
     fpr["micro"], tpr["micro"], _ = metrics.roc_curve(
-        y_true.ravel(), y_pred.ravel())
+        y_test.ravel(), y_pred.ravel())
     roc_auc["micro"] = metrics.auc(fpr["micro"], tpr["micro"])
 
     lw = 2
@@ -234,7 +335,7 @@ def plot_auc_roc_multi_class(y_true, y_pred, class_names, save_path=None):
                    ''.format(roc_auc["macro"]),
              color='navy', linestyle=':', linewidth=4)
 
-    colors = itertools.cycle(['aqua', 'darkorange', 'cornflowerblue'])
+    colors = cycle(['aqua', 'darkorange', 'cornflowerblue']) #itertools.cycle(['aqua', 'darkorange', 'cornflowerblue'])
     roc_auc_of_classes = []
     for i, color in zip(range(n_classes), colors):
         roc_auc_of_classes.append(roc_auc[i])
@@ -257,27 +358,40 @@ def plot_auc_roc_multi_class(y_true, y_pred, class_names, save_path=None):
     plt.show()
 
 
-def plot_prc_auc_multiclass(y_true, y_pred, class_names, save_path=None):
-    y_true = np.array(y_true)
-    y_pred = np.argmax(y_pred, axis=1)  
+def plot_prc_auc_multiclass(y_test, y_pred, class_names, save_path=None):
+    """Form a complex number.
+
+    Arguments:
+    y_true -- the real part (default 0.0)
+    y_pred -- the imaginary part (default 0.0)
+    class_names -- the imaginary part (default 0.0)
+    save_path -- the imaginary part (default 0.0)
+    """
+    y_test = np.array(y_test)
+    
+    try:
+        y_pred = np.argmax(y_pred, axis=1) 
+    except Exception as e:
+        print(e)
+          
     
     if(len(class_names) == 0):
-        if(len(y_true.shape) == 1):
-            class_names = np.unique(y_true)
+        if(len(y_test.shape) == 1):
+            class_names = np.unique(y_test)
         else:
-            class_names = np.unique(np.argmax(y_true, axis=1))
+            class_names = np.unique(np.argmax(y_test, axis=1))
     
-    if(len(y_true.shape) == 1):
-        matrix = metrics.confusion_matrix(y_true, y_pred)
-        y_true = pd.get_dummies(y_true).values
+    if(len(y_test.shape) == 1):
+        matrix = metrics.confusion_matrix(y_test, y_pred)
+        y_test = pd.get_dummies(y_test).values
     else:
-        matrix = metrics.confusion_matrix(np.argmax(y_true, axis=1), y_pred)
+        matrix = metrics.confusion_matrix(np.argmax(y_test, axis=1), y_pred)
         
     if(len(y_pred.shape) == 1):
         class_check = np.unique(y_pred)
         y_pred = pd.get_dummies(y_pred).values
         
-    if(y_pred.shape[1] != y_true.shape[1]):
+    if(y_pred.shape[1] != y_test.shape[1]):
         y_pred_df = pd.DataFrame(columns=class_names)
         i_control = 0
         for i in class_names:
@@ -294,21 +408,21 @@ def plot_prc_auc_multiclass(y_true, y_pred, class_names, save_path=None):
     recall = dict()
     average_precision = dict()
     for i in range(n_classes):
-        precision[i], recall[i], _ = metrics.precision_recall_curve(y_true[:, i],
+        precision[i], recall[i], _ = metrics.precision_recall_curve(y_test[:, i],
                                                                     y_pred[:, i])
         average_precision[i] = metrics.average_precision_score(
-            y_true[:, i], y_pred[:, i])
+            y_test[:, i], y_pred[:, i])
 
     # A "micro-average": quantifying score on all classes jointly
-    precision["micro"], recall["micro"], _ = metrics.precision_recall_curve(y_true.ravel(),
+    precision["micro"], recall["micro"], _ = metrics.precision_recall_curve(y_test.ravel(),
                                                                             y_pred.ravel())
-    average_precision["micro"] = metrics.average_precision_score(y_true, y_pred,
+    average_precision["micro"] = metrics.average_precision_score(y_test, y_pred,
                                                                  average="micro")
     # print('Average precision score, micro-averaged over all classes: {0:0.2f}'
     #      .format(average_precision["micro"]))
 
-    colors = itertools.cycle(
-        ['navy', 'turquoise', 'darkorange', 'cornflowerblue', 'teal'])
+    colors = cycle(['aqua', 'darkorange', 'cornflowerblue']) #itertools.cycle(['navy', 'turquoise', 'darkorange', 'cornflowerblue', 'teal'])
+#     print(list(colors))
     plt.figure(figsize=(15, 10))
     f_scores = np.linspace(0.2, 0.8, num=4)
     lines = []
@@ -349,39 +463,63 @@ def plot_prc_auc_multiclass(y_true, y_pred, class_names, save_path=None):
 
 ############################################################## Função Principal
 
-def get_metrics(y_true, y_pred, class_names=[], save_path=None):
-    y_true = np.array(y_true)
-    y_pred = np.argmax(y_pred, axis=1)  
+def get_metrics(y_test, y_pred, class_names=[], save_path=None):
+    """Form a complex number.
+
+    Arguments:
+    y_true -- the real part (default 0.0)
+    y_pred -- the imaginary part (default 0.0)
+    class_names -- the imaginary part (default 0.0)
+    save_path -- the imaginary part (default 0.0)
+    """
+    y_test = np.array(y_test)
     
-    if(len(class_names) == 0):
-        if(len(y_true.shape) == 1):
-            class_names = np.unique(y_true)
-        else:
-            class_names = np.unique(np.argmax(y_true, axis=1))
+    try:
+        y_pred = np.argmax(y_pred, axis=1) 
+    except Exception as e:
+        print(e)
     
-    if(len(y_true.shape) == 1):
-        matrix = metrics.confusion_matrix(y_true, y_pred)
-        y_true = pd.get_dummies(y_true).values
+    if(len(y_test.shape) == 1):
+        matrix = metrics.confusion_matrix(y_test, y_pred)
+        y_test = pd.get_dummies(y_test).values
     else:
-        matrix = metrics.confusion_matrix(np.argmax(y_true, axis=1), y_pred)
+        matrix = metrics.confusion_matrix(np.argmax(y_test, axis=1), y_pred)
         
     if(len(y_pred.shape) == 1):
-        class_check = np.unique(y_pred)
         y_pred = pd.get_dummies(y_pred).values
         
-    if(y_pred.shape[1] != y_true.shape[1]):
-        y_pred_df = pd.DataFrame(columns=class_names)
-        i_control = 0
-        for i in class_names:
-            if i in class_check:
-                y_pred_df[i] = y_pred[:, i_control]
-                i_control += 1
-            else:
-                y_pred_df[i] = np.array([0]*y_pred.shape[0])
-                
-        y_pred = y_pred_df.values
+    if(len(class_names) == 0):
+        if(len(y_test.shape) == 1):
+            class_names = np.unique(y_pred)
+        else:
+            class_test = np.unique(np.argmax(y_test, axis=1))
+            class_pred = np.unique(np.argmax(y_pred, axis=1))
+            class_names = class_test if len(class_test) >= len(class_pred) else class_pred
         
-    
+    if(y_pred.shape[1] != y_test.shape[1]):
+        if(len(class_test) > len(class_pred)):
+            y_pred_df = pd.DataFrame(columns=class_names)
+            i_control = 0
+            for i in class_names:
+                if i in class_pred:
+                    y_pred_df[i] = y_pred[:, i_control]
+                    i_control += 1
+                else:
+                    y_pred_df[i] = np.array([0]*y_pred.shape[0])
+
+            y_pred = y_pred_df.values
+        else:
+            y_test_df = pd.DataFrame(columns=class_names)
+            i_control = 0
+            for i in class_names:
+                if i in class_test:
+                    y_test_df[i] = y_test[:, i_control]
+                    i_control += 1
+                else:
+                    y_test_df[i] = np.array([0]*y_test.shape[0])
+
+            y_test = y_test_df.values
+        
     TP = np.diag(matrix)
     FP = matrix.sum(axis=0) - TP
     FN = matrix.sum(axis=1) - TP
@@ -396,15 +534,15 @@ def get_metrics(y_true, y_pred, class_names=[], save_path=None):
     rows.append('Weighted Avg')
     metrics_['Classes'] = rows
     
-    _f1 = np.around(f1_score(y_true, y_pred), decimals=2)
+    _f1 = np.around(f1_score(y_test, y_pred), decimals=2)
     _f1 = np.append(_f1, np.around(np.mean(_f1), decimals=2))
     _f1 = np.append(_f1, np.round(weighted_average(_f1[0], _f1[1], P[0], P[1]), decimals=2))
 
-    _roc_auc = np.around(roc_auc(y_true, y_pred, class_names), decimals=2)
+    _roc_auc = np.around(roc_auc(y_test, y_pred, class_names), decimals=2)
     _roc_auc = np.append(_roc_auc, np.around(np.mean(_roc_auc), decimals=2))
     _roc_auc = np.append(_roc_auc, np.round(weighted_average(_roc_auc[0], _roc_auc[1], P[0], P[1]), decimals=2))
 
-    _prc_auc = np.around(prc_auc(y_true, y_pred, class_names), decimals=2)
+    _prc_auc = np.around(prc_auc(y_test, y_pred, class_names), decimals=2)
     _prc_auc = np.append(_prc_auc, np.around(np.mean(_prc_auc), decimals=2))
     _prc_auc = np.append(_prc_auc, np.round(weighted_average(_prc_auc[0], _prc_auc[1], P[0], P[1]), decimals=2))
 
@@ -435,12 +573,22 @@ def get_metrics(y_true, y_pred, class_names=[], save_path=None):
     return metrics_
 
 def plot_graphics(y_true, y_pred, class_names=[], save_path=None):
+    """Form a complex number.
+
+    Arguments:
+    y_true -- the real part (default 0.0)
+    y_pred -- the imaginary part (default 0.0)
+    class_names -- the imaginary part (default 0.0)
+    save_path -- the imaginary part (default 0.0)
+    """
     if(len(class_names) == 0):
-        if(len(y_true.shape) == 1):
-            class_names = np.unique(y_true)
+        if(len(y_test.shape) == 1):
+            class_names = np.unique(y_test)
         else:
-            class_names = np.unique(np.argmax(y_true, axis=1))
-            
+            class_names = np.unique(np.argmax(y_test, axis=1))
+    
+    
     display(plot_confusion_matrix(y_true, y_pred, visualize=True, normalize=True, class_names=class_names, save_path=save_path))
     display(plot_auc_roc_multi_class(y_true, y_pred, class_names=class_names, save_path=save_path))
     display(plot_prc_auc_multiclass(y_true, y_pred, class_names=class_names, save_path=save_path))
+
