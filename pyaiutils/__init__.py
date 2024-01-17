@@ -6,6 +6,9 @@ import matplotlib.colors as colors
 import pandas as pd
 import math
 import os
+from . import metrics
+from . import plots
+from . import utils
 
 def cycle(iterable):
     """Form a complex number.
@@ -591,4 +594,3 @@ def plot_graphics(y_true, y_pred, class_names=[], save_path=None):
     display(plot_confusion_matrix(y_true, y_pred, visualize=True, normalize=True, class_names=class_names, save_path=save_path))
     display(plot_auc_roc_multi_class(y_true, y_pred, class_names=class_names, save_path=save_path))
     display(plot_prc_auc_multiclass(y_true, y_pred, class_names=class_names, save_path=save_path))
-
